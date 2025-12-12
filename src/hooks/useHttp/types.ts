@@ -28,11 +28,17 @@ export type IUseHttpProps<IResponseType = any> = {
   };
   error?: {
     message?: IMessageType;
-    action?: (params: { data: any; response: AxiosResponse<IHttpResponse<IResponseType>> }) => void;
+    action?: (params: {
+      data: any;
+      response: AxiosResponse<IHttpResponse<IResponseType>>;
+    }) => void;
   };
 };
 
-export type IHttpType<IRequestType = any> = Omit<IUseHttpProps<IRequestType>, "url" | "method">;
+export type IHttpType<IRequestType = any> = Omit<
+  IUseHttpProps<IRequestType>,
+  "url" | "method"
+>;
 
 export interface UseHttpState<IRequestType = any, IResponseType = any> {
   loading: boolean;

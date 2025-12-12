@@ -24,7 +24,10 @@ const handleHttpError = (
       errorMessage = "Time out";
       break;
     default:
-      errorMessage = error?.response?.data?.meta?.message || error?.message || "Unknown error";
+      errorMessage =
+        error?.response?.data?.meta?.message ||
+        error?.message ||
+        "Unknown error";
       break;
   }
 
@@ -52,12 +55,14 @@ export const useHttp = <IRequestType = any, IResponseType = any>({
     success.message = !method || method === "get" ? null : "default";
   if (error.message === undefined) error.message = "default";
 
-  const [state, setState] = useState<UseHttpState<IRequestType, IResponseType>>({
-    loading: false,
-    data: null,
-    errorMessage: null,
-    fetchData: () => {},
-  });
+  const [state, setState] = useState<UseHttpState<IRequestType, IResponseType>>(
+    {
+      loading: false,
+      data: null,
+      errorMessage: null,
+      fetchData: () => {},
+    }
+  );
 
   const fetchData = async (overrideData?: IRequestType) => {
     const loadingKey = nanoid();
@@ -74,15 +79,19 @@ export const useHttp = <IRequestType = any, IResponseType = any>({
 
       const requestData = overrideData ?? data;
 
-      const response: AxiosResponse<IHttpResponse<IResponseType>> = await axios({
-        url: `${apiBaseUrl}${url}`,
-        method,
-        ...(method === "get" ? { params: requestData } : { data: requestData }),
-        headers: {
-          ...headers,
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      });
+      const response: AxiosResponse<IHttpResponse<IResponseType>> = await axios(
+        {
+          url: `${apiBaseUrl}${url}`,
+          method,
+          ...(method === "get"
+            ? { params: requestData }
+            : { data: requestData }),
+          headers: {
+            ...headers,
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
 
       const responseData = response.data;
 

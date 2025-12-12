@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useMemo, useCallback } from "react";
 import { message } from "antd";
-import type { ArgsProps } from "antd/es/message/interface";
+type MessageArgsProps = Parameters<typeof message.open>[0];
 import { nanoid } from "@reduxjs/toolkit";
 
 type MESSAGE_TYPE = "success" | "error" | "info" | "warning" | "loading";
 
-type IMessageType = string | Omit<ArgsProps, "type">;
+type IMessageType = string | Omit<MessageArgsProps, "type">;
 
 interface MessageApiContextType {
   success: (params: IMessageType) => string | number;
@@ -19,12 +19,14 @@ interface MessageApiContextType {
 
 const MessageApiContext = createContext<MessageApiContextType | null>(null);
 
-export const MessageApiProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MessageApiProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const showMessage = useCallback(
     (type: MESSAGE_TYPE, params: IMessageType) => {
-      let config: ArgsProps;
+      let config: MessageArgsProps;
 
       if (typeof params === "string") {
         config = { type, content: params };

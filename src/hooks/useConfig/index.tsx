@@ -11,7 +11,10 @@ type ConfigProviderProps = {
   config?: Partial<Config>;
 };
 
-export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, config = {} }) => (
+export const ConfigProvider: React.FC<ConfigProviderProps> = ({
+  children,
+  config = {},
+}) => (
   <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>
 );
 
