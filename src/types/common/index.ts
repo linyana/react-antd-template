@@ -1,6 +1,6 @@
 export type IPaginationType = {
-	current: number;
-	limit: number;
-	offset: number;
-	totalCount: number;
+  current: number;
+  limit: number;
+  offset: number;
+  totalCount: number;
 };

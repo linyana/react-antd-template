@@ -6,11 +6,11 @@ import { MessageApiProvider } from "@/hooks";
 // import { store } from "@/store";
 
 createRoot(document.getElementById("root")!).render(
-	// <Provider store={store}>
-		<MessageApiProvider>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
-	</MessageApiProvider>
-	// </Provider>
+  // <Provider store={store}>
+  <MessageApiProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </MessageApiProvider>
+  // </Provider>
 );
