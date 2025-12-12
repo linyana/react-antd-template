@@ -15,15 +15,14 @@ export type IUseHttpProps<IResponseType = any> = {
   url: string;
   method?: AxiosRequestConfig["method"];
   data?: AxiosRequestConfig["data"];
+  params?: AxiosRequestConfig["params"];
   headers?: AxiosRequestConfig["headers"];
-  isLocal?: boolean;
-  showLoading?: boolean;
   success?: {
     message?: IMessageType;
     action?: (params: {
       data: IResponseType;
       response: AxiosResponse<IHttpResponse<IResponseType>>;
-      pagination?: IPaginationType;
+      pagination: IPaginationType;
     }) => void;
   };
   error?: {
@@ -35,14 +34,22 @@ export type IUseHttpProps<IResponseType = any> = {
   };
 };
 
-export type IHttpType<IRequestType = any> = Omit<
-  IUseHttpProps<IRequestType>,
-  "url" | "method"
->;
+export type IHttpType<TRequest = any, TResponse = any> = Omit<
+  IUseHttpProps<TResponse>,
+  "url" | "method" | "data"
+> & {
+  data?: TRequest;
+};
 
 export interface UseHttpState<IRequestType = any, IResponseType = any> {
   loading: boolean;
   errorMessage: string | null;
   data: IResponseType | null;
   fetchData: (overrideData?: IRequestType) => void;
+  pagination: IPaginationType;
 }
+
+export type IHttpGenerics = {
+  request?: any;
+  response?: any;
+};
